@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* layout botão do cadastro*/
+  .botao-cadastro {
+      position: absolute;
+          bottom: 283px;
+          right: 481px;
+          background-color: #007bff; /* Cor de fundo azul */
+          color: #fff; /* Cor do texto branco */
+          border: none;
+          padding: 10px 20px;
+          font-size: 16px;
+          cursor: pointer;
+          border-radius: 5px;
+          z-index: 999; /* Para garantir que o botão fique sobre outros elementos */
+          .botao-cadastro:hover{ 
+            /* Muda a cor do fundo do botão quando passa o mouse */
+            background-color: #0056b3;
+          }
+  }
+
+    /* layout botão do recuperar*/
+  
+  .botao-recuperar {
+      
+      bottom: 208px;
+      background-color: #007bff; /* Cor de fundo azul */
+      color: #fff; /* Cor do texto branco */
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      z-index: 999; /* Para garantir que o botão fique sobre outros elementos */
+  
+      .botao-recuperar:hover{ 
+        /* Muda a cor do fundo do botão quando passa o mouse */
+        background-color: #0056b3;
+      }
+
+}
+
+    </style>
+</head>
+<body>
+
+<a class="botao-voltar":hover href="index.html">Voltar</a>
+</body>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+       
+        <form action="processar_login.php" method="post">
+            <input type="hidden" name="redirect" id="redirectField" value="<?php echo htmlspecialchars($_GET['redirect'] ?? ''); ?>">
+            <input type="text" name="CPF" placeholder="CPF" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" required oninput="aplicarMascaraCPF(this)">
+            <input type="password" name="senha" placeholder="Senha" required>
+            <input type="submit" value="Login">
+        </form>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var urlParams = new URLSearchParams(window.location.search);
+                var redirect = urlParams.get('redirect') || 'default'; // 'default' pode ser substituído por um valor padrão, caso necessário
+                document.getElementById('redirectField').value = redirect;
+            });
+
+             // Adiciona a máscara de CPF ao campo CPF
+             var cpfField = document.querySelector('input[name="CPF"]');
+            cpfField.addEventListener('input', function() {
+                var cpf = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+                cpf = cpf.substring(0, 11); // Limita a 11 dígitos
+
+                // Formatação da máscara
+                cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+                cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+                cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+                this.value = cpf; // Atualiza o valor no campo
+            });
+            
+        </script>
+
+		<p><a class="botao-recuperar" href="recuperar_senha.html">Esqueci minha senha? </a></p>
+		<p><a class="botao-cadastro"  href="cadastro.html">Crie uma conta</a></p>
+    </div>
+</body>
+</html>
